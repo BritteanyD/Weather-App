@@ -1,20 +1,147 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
 * {
+  font-family: "Poppins", sans-serif;
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-image: url('pexels-magda-ehlers-2114014.jpg');
-    background-size: cover;
-    height: 100vh;
-    padding:0;
-    margin:0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url("pexels-magda-ehlers-2114014.jpg");
+  background-size: cover;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
 }
 
 .api-data {
-    background-color: blue;
+  position: relative;
+  width: 400px;
+  height: 500px;
+  background: rgba(27, 2, 73, 0.307);
+  border-radius: 20px;
+  border: 1px solid rgba(27, 2, 73, 0.307);
+  backdrop-filter: blur(3px);
+  padding: 20px;
+  color:aliceblue;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: 50px;
+}
+
+.search input {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  outline: none;
+  border-radius: 10px;
+  font-size: 22px;
+  color: aliceblue;
+  font-weight: 500;
+  text-transform: uppercase;
+  padding: 0 48px 0 42px;
+}
+
+.search input::placeholder {
+color:aliceblue;
+text-transform: capitalize;
+}
+
+.search i {
+  position: absolute;
+  left: 10px;
+  color:aliceblue;
+}
+
+.search button {
+  position: absolute;
+  right: 0;
+  width: 40px;
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: aliceblue;
+  padding: 0 40px 0 5px;
+  cursor: pointer;
+}
+
+.weather-box {
+  text-align: center;
+  margin: 40px;
+}
+
+.weather-box img {
+  width: 60%;
+}
+
+.weather-box .temperature {
+  position: relative;
+  font-size: 64px;
+  line-height: 1;
+  font-weight: 700;
+  margin: 20px 0 6px 0;
+}
+
+.weather-box .temperature span {
+  position: absolute;
+  font-size: 24px;
+  margin-left: 4px;
+}
+
+.weather-box .description {
+  font-size: 22px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.weather-details {
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  width: 100%;
+  padding: 0 20px;
+  display: flex;
+}
+
+.weather-details .feels,
+ .weather-details .wind {
+  display: flex;
+  align-items: center;
+  width: 70%;
+}
+
+.weather-details .feels {
+  padding-left: 20px;
+  justify-content: flex-start;
+}
+
+.weather-details .wind {
+  padding-right: 20px;
+  justify-content: flex-end;
+}
+
+.weather-details i {
+  font-size: 60px;
+  margin-right: 10px;
+}
+
+.weather-details span {
+  display: inline-block;
+  font-size: 22px;
+  font-weight: 500;
+}
+.weather-details p {
+  font-size: 14px;
+  font-weight: 500;
 }

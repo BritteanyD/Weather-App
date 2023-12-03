@@ -13,13 +13,41 @@
   </head>
   <body>
     <div class="api-data">
-      API DATA HERE
       <div class="search">
         <i class="fa-solid fa-location-dot fa-lg"></i>
-        <input type="text" placeholder="Enter location here" />
+        <input class="city" type="text" placeholder="Enter location here" />
         <button>
-            <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+          <i class="fa-solid fa-magnifying-glass fa-lg"></i>
         </button>
+      </div>
+      <div class="weather-box">
+        <div clss="box">
+          <div class="info-weather">
+            <img src="clear.png" />
+            <p class="temperature">77<span>&#8457;</span></p>
+            <p class="description">Sunny</p>
+          </div>
+        </div>
+      </div>
+      <div class="weather-details">
+        <div class="feels">
+          <i class="fa-solid fa-temperature-three-quarters"></i>
+          <div class="text">
+            <div class="info-feels">
+              <span>70&#8457</span>
+            </div>
+            <p>Feels Like</p>
+          </div>
+        </div>
+        <div class="wind">
+          <i class="fa-solid fa-wind"></i>
+          <div class="text">
+            <div class="info-wind">
+              <span>10mph</span>
+            </div>
+            <p>Wind Speed</p>
+          </div>
+        </div>
       </div>
     </div>
     <script src="script.js"></script>
