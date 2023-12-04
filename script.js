@@ -39,26 +39,32 @@ searchButton.addEventListener("click", () => {
           break;
 
         case "Clouds":
-          image.src = "cloud.jpg";
+          image.src = "cloudy.jpg";
           break;
 
-        case "Fog":
+        case "Mist":
+          image.src = "foggy.jpg";
+          break;
+
+        case "Haze":
           image.src = "foggy.jpg";
           break;
 
         default:
           image.src = "sunny.jpg";
       }
-
       const tempInKelvin = json.main.temp;
-      const tempInFahrenheit = (tempInKelvin - 273.15) * 9/5 + 32;
-      temperature.innerHTML = `${parseInt(tempInFahrenheit)}<span>&#8457;</span>`;
+      const tempInFahrenheit = ((tempInKelvin - 273.15) * 9) / 5 + 32;
+      temperature.innerHTML = `${parseInt(
+        tempInFahrenheit
+      )}<span>&#8457;</span>`;
+
       description.innerHTML = `${json.weather[0].description}`;
-     
+
       const feelsInKelvin = json.main.feels_like;
-      const feelsInFahrenheit = (feelsInKelvin - 273.15) * 9/5 + 32;
+      const feelsInFahrenheit = ((feelsInKelvin - 273.15) * 9) / 5 + 32;
       feels.innerHTML = `${parseInt(feelsInFahrenheit)}<span>&#8457;</span>`;
-     
+
       wind.innerHTML = `${parseInt(json.wind.speed)}mph`;
     })
     .catch((error) => {
