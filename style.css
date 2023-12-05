@@ -116,7 +116,7 @@ text-transform: capitalize;
   font-size: 64px;
   line-height: 1;
   font-weight: 700;
-  margin: 20px 0 6px 0;
+  margin: 15px 0 6px 0;
 }
 
 .weather-box .temperature span {
@@ -136,7 +136,7 @@ text-transform: capitalize;
   bottom: 40px;
   left: 0;
   width: 100%;
-  padding: 0 20px;
+  padding: 0 10px;
   display: flex;
 }
 
@@ -192,7 +192,7 @@ width: 65%;
 }
 
 #toggleButton {
-  background-color: rgba(253, 175, 48, 0.714);
+  background-color: rgba(253, 160, 98, 0.77);
   color:aliceblue;
   border-radius: 5px;
   border: 1px solid rgb(237, 175, 52);
