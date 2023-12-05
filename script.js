@@ -81,5 +81,4 @@ searchButton.addEventListener("click", () => {
     });
 });
 
-//get error message to display
 //toggle from celsius to fahrenheit
