@@ -1,8 +1,18 @@
 const container = document.querySelector(".container");
 const searchButton = document.querySelector(".search button");
+const toggleButton = document.querySelector("#toggleButton");
 const weatherBox = document.querySelector(".weather-box");
 const weatherDetails = document.querySelector(".weather-details");
 const error404 = document.querySelector(".not-found");
+
+let json;
+
+let isCelsius = true;
+
+toggleButton.addEventListener("click", () => {
+  isCelsius = !isCelsius;
+  updateTemperatureDisplay();
+});
 
 searchButton.addEventListener("click", () => {
   const APIKey = "b076a8a09b7ac1a9ea89b6d5d522bcb3";
@@ -11,10 +21,11 @@ searchButton.addEventListener("click", () => {
   if (city == "") return;
 
   fetch(
-    `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIKey}`
+    `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${APIKey}`
   )
     .then((response) => response.json())
-    .then((json) => {
+    .then((data) => {
+      json= data;
       if (json.cod == "404") {
         container.style.height = "400px";
         weatherBox.classList.remove("active");
@@ -24,9 +35,14 @@ searchButton.addEventListener("click", () => {
       }
 
       container.style.height = "500px";
+      container.classList.add("active");
       weatherBox.classList.add("active");
       weatherDetails.classList.add("active");
       error404.classList.remove("active");
+
+      setTimeout(() => {
+        container.classList.remove("active");
+      }, 2500);
 
       const image = document.querySelector(".weather-box img");
       const temperature = document.querySelector(".weather-box .temperature");
@@ -62,23 +78,40 @@ searchButton.addEventListener("click", () => {
         default:
           image.src = "sunny.jpg";
       }
-      const tempInKelvin = json.main.temp;
-      const tempInFahrenheit = ((tempInKelvin - 273.15) * 9) / 5 + 32;
-      temperature.innerHTML = `${parseInt(
-        tempInFahrenheit
-      )}<span>&#8457;</span>`;
+      updateTemperatureDisplay();
 
+      temperature.innerHTML = `${parseInt(json.main.temp)}<span>&degC</span>`;
       description.innerHTML = `${json.weather[0].description}`;
+      feels.innerHTML = `${json.main.feels_like}<span>&degC</span>`;
+      wind.innerHTML = `${parseInt(json.wind.speed)}Km/h`;
 
-      const feelsInKelvin = json.main.feels_like;
-      const feelsInFahrenheit = ((feelsInKelvin - 273.15) * 9) / 5 + 32;
-      feels.innerHTML = `${parseInt(feelsInFahrenheit)}<span>&#8457;</span>`;
-
-      wind.innerHTML = `${parseInt(json.wind.speed)}mph`;
-    })
-    .catch((error) => {
-      console.error("Error:", error);
+      updateTemperatureDisplay();
     });
 });
+
+function updateTemperatureDisplay() {
+  const temperatureElement = document.querySelector(
+    ".weather-box .temperature"
+  );
+  const feelsElement = document.querySelector(".weather-details .feels span"); // Check if we should display in Celsius or Fahrenheit
+
+  if (isCelsius) {
+    temperatureElement.innerHTML = `${parseInt(
+      json.main.temp
+    )}<span>&degC</span>`;
+    feelsElement.innerHTML = `${json.main.feels_like}<span>&degC</span>`;
+  } else {
+    const tempFahrenheit = (json.main.temp * 9) / 5 + 32;
+    const feelsLikeFahrenheit = (json.main.feels_like * 9) / 5 + 32;
+    temperatureElement.innerHTML = `${tempFahrenheit.toFixed(
+      2
+    )}<span>&degF</span>`;
+    feelsElement.innerHTML = `${feelsLikeFahrenheit.toFixed(
+      2
+    )}<span>&degF</span>`;
+  }
+};
+
+
 
 //toggle from celsius to fahrenheit

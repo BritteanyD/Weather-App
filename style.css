@@ -83,7 +83,7 @@ text-transform: capitalize;
 }
 
 .weather-box, .weather-details, .not-found {
-  overflow: hidden;
+  overflow:hidden;
   visibility: hidden;
 }
 
@@ -99,6 +99,12 @@ text-transform: capitalize;
   transform: translateY(0%);
   transition: transform 1s ease;
   transition-delay: .2s;
+}
+
+.container.active .weather-box .box .info-weather, .container.active .weather-details .feels .info-feels,
+ .container.active .weather-details .wind .info-wind {
+  transform: translateY(0%);
+  transition: transform 1s ease;
 }
 
 .weather-box img {
@@ -139,14 +145,6 @@ text-transform: capitalize;
   display: flex;
   align-items: center;
   width: 70%;
-  transform: translateY(-100%);
-}
-
-.weather-details.active .feels,
- .weather-details.active .wind {
-  transform:translateY(0%);
-  transition: transform 1s ease;
-  transition-delay: 1.2s;
 }
 
 .weather-details .feels {
@@ -192,3 +190,4 @@ width: 65%;
   font-weight: 500;
   margin-top: 12px;
 }
+
