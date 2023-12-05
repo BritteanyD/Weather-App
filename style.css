@@ -191,3 +191,12 @@ width: 65%;
   margin-top: 12px;
 }
 
+#toggleButton {
+  background-color: rgba(253, 175, 48, 0.714);
+  color:aliceblue;
+  border-radius: 5px;
+  border: 1px solid rgb(237, 175, 52);
+  padding: 3px;
+  font-weight: 500;
+  cursor: pointer;
+}

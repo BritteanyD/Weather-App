@@ -6,12 +6,14 @@ const weatherDetails = document.querySelector(".weather-details");
 const error404 = document.querySelector(".not-found");
 
 let json;
-
 let isCelsius = true;
+let isKilometersPerHour = true;
 
 toggleButton.addEventListener("click", () => {
   isCelsius = !isCelsius;
+  isKilometersPerHour = !isKilometersPerHour;
   updateTemperatureDisplay();
+  updateWindDisplay();
 });
 
 searchButton.addEventListener("click", () => {
@@ -25,7 +27,7 @@ searchButton.addEventListener("click", () => {
   )
     .then((response) => response.json())
     .then((data) => {
-      json= data;
+      json = data;
       if (json.cod == "404") {
         container.style.height = "400px";
         weatherBox.classList.remove("active");
@@ -86,6 +88,7 @@ searchButton.addEventListener("click", () => {
       wind.innerHTML = `${parseInt(json.wind.speed)}Km/h`;
 
       updateTemperatureDisplay();
+      updateWindDisplay();
     });
 });
 
@@ -110,8 +113,16 @@ function updateTemperatureDisplay() {
       2
     )}<span>&degF</span>`;
   }
-};
+}
 
-
-
-//toggle from celsius to fahrenheit
+function updateWindDisplay() {
+  const windElement = document.querySelector(".weather-details .wind span");
+  if (json) {
+    if (isKilometersPerHour) {
+      windElement.innerHTML = `${parseInt(json.wind.speed)}Km/h`;
+    } else {
+      const windMph = (json.wind.speed * 0.621371).toFixed(2);
+      windElement.innerHTML = `${windMph}mph`;
+    }
+  }
+}
