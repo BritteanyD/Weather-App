@@ -2,6 +2,7 @@ const container = document.querySelector(".container");
 const searchButton = document.querySelector(".search button");
 const weatherBox = document.querySelector(".weather-box");
 const weatherDetails = document.querySelector(".weather-details");
+const error404 = document.querySelector(".not-found");
 
 searchButton.addEventListener("click", () => {
   const APIKey = "b076a8a09b7ac1a9ea89b6d5d522bcb3";
@@ -12,13 +13,21 @@ searchButton.addEventListener("click", () => {
   fetch(
     `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIKey}`
   )
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
-    })
+    .then((response) => response.json())
     .then((json) => {
+      if (json.cod == "404") {
+        container.style.height = "400px";
+        weatherBox.classList.remove("active");
+        weatherDetails.classList.remove("active");
+        error404.classList.add("active");
+        return;
+      }
+
+      container.style.height = "500px";
+      weatherBox.classList.add("active");
+      weatherDetails.classList.add("active");
+      error404.classList.remove("active");
+
       const image = document.querySelector(".weather-box img");
       const temperature = document.querySelector(".weather-box .temperature");
       const description = document.querySelector(".weather-box .description");
@@ -71,3 +80,6 @@ searchButton.addEventListener("click", () => {
       console.error("Error:", error);
     });
 });
+
+//get error message to display
+//toggle from celsius to fahrenheit
