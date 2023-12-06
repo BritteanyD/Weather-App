@@ -25,11 +25,10 @@
 body {
   display: flex;
   justify-content: center;
-  align-items: center;
   background-image: url("pexels-magda-ehlers-2114014.jpg");
   background-size: cover;
   height: 100vh;
-  padding: 0;
+  padding: 100px;
   margin: 0;
 }
 
