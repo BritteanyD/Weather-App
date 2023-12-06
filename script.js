@@ -16,11 +16,12 @@ toggleButton.addEventListener("click", () => {
   updateWindDisplay();
 });
 
-searchButton.addEventListener("click", () => {
+function handleWeatherSearch() {
   const APIKey = "b076a8a09b7ac1a9ea89b6d5d522bcb3";
-  const city = document.querySelector(".search input").value;
+  const cityInput = document.querySelector(".search input");
+  const city = cityInput.value.trim();
 
-  if (city == "") return;
+  if (city === "") return;
 
   fetch(
     `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${APIKey}`
@@ -35,13 +36,11 @@ searchButton.addEventListener("click", () => {
         error404.classList.add("active");
         return;
       }
-
       container.style.height = "550px";
       container.classList.add("active");
       weatherBox.classList.add("active");
       weatherDetails.classList.add("active");
       error404.classList.remove("active");
-
       setTimeout(() => {
         container.classList.remove("active");
       }, 2500);
@@ -90,50 +89,41 @@ searchButton.addEventListener("click", () => {
       updateTemperatureDisplay();
       updateWindDisplay();
     });
+}
+
+searchButton.addEventListener("click", handleWeatherSearch);
+
+const cityInput = document.querySelector(".search input");
+cityInput.addEventListener("keyup", function (event) {
+  if (event.key === "Enter") {
+    handleWeatherSearch();
+  }
 });
 
 function updateTemperatureDisplay() {
-  const temperatureElement = document.querySelector(".weather-box .temperature");
+  const temperatureElement = document.querySelector(
+    ".weather-box .temperature"
+  );
   const feelsElement = document.querySelector(".weather-details .feels span");
 
-  // Check if we should display in Celsius or Fahrenheit
   if (isCelsius) {
     const celsiusTemperature = Math.round(json.main.temp);
     const celsiusFeelsLike = Math.round(json.main.feels_like);
     temperatureElement.innerHTML = `${celsiusTemperature}<span>&degC</span>`;
     feelsElement.innerHTML = `${celsiusFeelsLike}<span>&degC</span>`;
   } else {
-    const tempFahrenheit = (json.main.temp * 9 / 5) + 32;
-    const feelsLikeFahrenheit = (json.main.feels_like * 9 / 5) + 32;
-    const roundedTempFahrenheit = Math.round(tempFahrenheit);
-    const roundedFeelsLikeFahrenheit = Math.round(feelsLikeFahrenheit);
-    temperatureElement.innerHTML = `${parseFloat(roundedTempFahrenheit).toFixed(0)}<span>&degF</span>`;
-    feelsElement.innerHTML = `${parseFloat(roundedFeelsLikeFahrenheit).toFixed(0)}<span>&degF</span>`;
-  }
-}
-
-/*function updateTemperatureDisplay() {
-  const temperatureElement = document.querySelector(
-    ".weather-box .temperature"
-  );
-  const feelsElement = document.querySelector(".weather-details .feels span"); // Check if we should display in Celsius or Fahrenheit
-
-  if (isCelsius) {
-    temperatureElement.innerHTML = `${parseInt(
-      json.main.temp
-    )}<span>&degC</span>`;
-    feelsElement.innerHTML = `${parseInt(json.main.feels_like)}<span>&degC</span>`;
-  } else {
     const tempFahrenheit = (json.main.temp * 9) / 5 + 32;
     const feelsLikeFahrenheit = (json.main.feels_like * 9) / 5 + 32;
-    temperatureElement.innerHTML = `${tempFahrenheit.toFixed(
-      2
+    const roundedTempFahrenheit = Math.round(tempFahrenheit);
+    const roundedFeelsLikeFahrenheit = Math.round(feelsLikeFahrenheit);
+    temperatureElement.innerHTML = `${parseFloat(roundedTempFahrenheit).toFixed(
+      0
     )}<span>&degF</span>`;
-    feelsElement.innerHTML = `${feelsLikeFahrenheit.toFixed(
-      2
+    feelsElement.innerHTML = `${parseFloat(roundedFeelsLikeFahrenheit).toFixed(
+      0
     )}<span>&degF</span>`;
   }
-}*/
+}
 
 function updateWindDisplay() {
   const windElement = document.querySelector(".weather-details .wind span");
