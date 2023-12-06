@@ -6,6 +6,19 @@
   box-sizing: border-box;
 }
 
+.header {
+  font-size: 30px;
+  color:aliceblue;
+  font-weight: 500;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+}
+
 body {
   display: flex;
   justify-content: center;
@@ -20,7 +33,7 @@ body {
 .container {
   position: relative;
   width: 400px;
-  height: 100px;
+  height: 150px;
   background: rgba(27, 2, 73, 0.307);
   border-radius: 20px;
   border: 1px solid rgba(27, 2, 73, 0.307);
