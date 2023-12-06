@@ -6,7 +6,7 @@ const weatherDetails = document.querySelector(".weather-details");
 const error404 = document.querySelector(".not-found");
 
 let json;
-let isCelsius = true;
+let isCelsius = false;
 let isKilometersPerHour = true;
 
 toggleButton.addEventListener("click", () => {
@@ -29,14 +29,14 @@ searchButton.addEventListener("click", () => {
     .then((data) => {
       json = data;
       if (json.cod == "404") {
-        container.style.height = "400px";
+        container.style.height = "440px";
         weatherBox.classList.remove("active");
         weatherDetails.classList.remove("active");
         error404.classList.add("active");
         return;
       }
 
-      container.style.height = "500px";
+      container.style.height = "550px";
       container.classList.add("active");
       weatherBox.classList.add("active");
       weatherDetails.classList.add("active");
@@ -93,6 +93,26 @@ searchButton.addEventListener("click", () => {
 });
 
 function updateTemperatureDisplay() {
+  const temperatureElement = document.querySelector(".weather-box .temperature");
+  const feelsElement = document.querySelector(".weather-details .feels span");
+
+  // Check if we should display in Celsius or Fahrenheit
+  if (isCelsius) {
+    const celsiusTemperature = Math.round(json.main.temp);
+    const celsiusFeelsLike = Math.round(json.main.feels_like);
+    temperatureElement.innerHTML = `${celsiusTemperature}<span>&degC</span>`;
+    feelsElement.innerHTML = `${celsiusFeelsLike}<span>&degC</span>`;
+  } else {
+    const tempFahrenheit = (json.main.temp * 9 / 5) + 32;
+    const feelsLikeFahrenheit = (json.main.feels_like * 9 / 5) + 32;
+    const roundedTempFahrenheit = Math.round(tempFahrenheit);
+    const roundedFeelsLikeFahrenheit = Math.round(feelsLikeFahrenheit);
+    temperatureElement.innerHTML = `${parseFloat(roundedTempFahrenheit).toFixed(0)}<span>&degF</span>`;
+    feelsElement.innerHTML = `${parseFloat(roundedFeelsLikeFahrenheit).toFixed(0)}<span>&degF</span>`;
+  }
+}
+
+/*function updateTemperatureDisplay() {
   const temperatureElement = document.querySelector(
     ".weather-box .temperature"
   );
@@ -102,7 +122,7 @@ function updateTemperatureDisplay() {
     temperatureElement.innerHTML = `${parseInt(
       json.main.temp
     )}<span>&degC</span>`;
-    feelsElement.innerHTML = `${json.main.feels_like}<span>&degC</span>`;
+    feelsElement.innerHTML = `${parseInt(json.main.feels_like)}<span>&degC</span>`;
   } else {
     const tempFahrenheit = (json.main.temp * 9) / 5 + 32;
     const feelsLikeFahrenheit = (json.main.feels_like * 9) / 5 + 32;
@@ -113,7 +133,7 @@ function updateTemperatureDisplay() {
       2
     )}<span>&degF</span>`;
   }
-}
+}*/
 
 function updateWindDisplay() {
   const windElement = document.querySelector(".weather-details .wind span");
