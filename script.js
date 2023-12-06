@@ -16,79 +16,84 @@ toggleButton.addEventListener("click", () => {
   updateWindDisplay();
 });
 
-function handleWeatherSearch() {
+async function handleWeatherSearch() {
   const APIKey = "b076a8a09b7ac1a9ea89b6d5d522bcb3";
   const cityInput = document.querySelector(".search input");
   const city = cityInput.value.trim();
 
   if (city === "") return;
 
-  fetch(
+  /*fetch(
     `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${APIKey}`
   )
     .then((response) => response.json())
     .then((data) => {
-      json = data;
-      if (json.cod == "404") {
-        container.style.height = "440px";
-        weatherBox.classList.remove("active");
-        weatherDetails.classList.remove("active");
-        error404.classList.add("active");
-        return;
-      }
-      container.style.height = "550px";
-      container.classList.add("active");
-      weatherBox.classList.add("active");
-      weatherDetails.classList.add("active");
-      error404.classList.remove("active");
-      setTimeout(() => {
-        container.classList.remove("active");
-      }, 2500);
+      json = data;*/
 
-      const image = document.querySelector(".weather-box img");
-      const temperature = document.querySelector(".weather-box .temperature");
-      const description = document.querySelector(".weather-box .description");
-      const feels = document.querySelector(".weather-details .feels span");
-      const wind = document.querySelector(".weather-details .wind span");
+  const response = await fetch(
+    `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${APIKey}`
+  );
+  json = await response.json();
 
-      switch (json.weather[0].main) {
-        case "Clear":
-          image.src = "sunny.jpg";
-          break;
+  if (json.cod == "404") {
+    container.style.height = "440px";
+    weatherBox.classList.remove("active");
+    weatherDetails.classList.remove("active");
+    error404.classList.add("active");
+    return;
+  }
+  container.style.height = "550px";
+  container.classList.add("active");
+  weatherBox.classList.add("active");
+  weatherDetails.classList.add("active");
+  error404.classList.remove("active");
+  setTimeout(() => {
+    container.classList.remove("active");
+  }, 2500);
 
-        case "Rain":
-          image.src = "rainy.jpg";
-          break;
+  const image = document.querySelector(".weather-box img");
+  const temperature = document.querySelector(".weather-box .temperature");
+  const description = document.querySelector(".weather-box .description");
+  const feels = document.querySelector(".weather-details .feels span");
+  const wind = document.querySelector(".weather-details .wind span");
 
-        case "Snow":
-          image.src = "snowy.jpg";
-          break;
+  switch (json.weather[0].main) {
+    case "Clear":
+      image.src = "sunny.jpg";
+      break;
 
-        case "Clouds":
-          image.src = "cloudy.jpg";
-          break;
+    case "Rain":
+      image.src = "rainy.jpg";
+      break;
 
-        case "Mist":
-          image.src = "foggy.jpg";
-          break;
+    case "Snow":
+      image.src = "snowy.jpg";
+      break;
 
-        case "Haze":
-          image.src = "foggy.jpg";
-          break;
+    case "Clouds":
+      image.src = "cloudy.jpg";
+      break;
 
-        default:
-          image.src = "sunny.jpg";
-      }
-      updateTemperatureDisplay();
+    case "Mist":
+      image.src = "foggy.jpg";
+      break;
 
-      temperature.innerHTML = `${parseInt(json.main.temp)}<span>&degC</span>`;
-      description.innerHTML = `${json.weather[0].description}`;
-      feels.innerHTML = `${json.main.feels_like}<span>&degC</span>`;
-      wind.innerHTML = `${parseInt(json.wind.speed)}Km/h`;
+    case "Haze":
+      image.src = "foggy.jpg";
+      break;
 
-      updateTemperatureDisplay();
-      updateWindDisplay();
-    });
+    default:
+      image.src = "sunny.jpg";
+  }
+  updateTemperatureDisplay();
+
+  temperature.innerHTML = `${parseInt(json.main.temp)}<span>&degC</span>`;
+  description.innerHTML = `${json.weather[0].description}`;
+  feels.innerHTML = `${json.main.feels_like}<span>&degC</span>`;
+  wind.innerHTML = `${parseInt(json.wind.speed)}Km/h`;
+
+  updateTemperatureDisplay();
+  updateWindDisplay();
 }
 
 searchButton.addEventListener("click", handleWeatherSearch);
